@@ -1,0 +1,9 @@
+*.o
+*.save
+*.exe
+*~
+jbb5044-texture_synthesis.zip
+research/lecture.pdf
+research/project\ description.html
+research/project\ description_files/*
+

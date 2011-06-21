@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="TextureSynthesis" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/TextureSynthesis" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Option parameters="sampleTextures/cells.jpg 22 64" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/TextureSynthesis" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="`sdl-config --cflags`" />
+			<Add directory="/usr/include" />
+			<Add directory="/Users/guest/apps/usr/include" />
+			<Add directory="/Users/guest/apps/usr/include/SDL" />
+			<Add directory="/usr/include/SDL" />
+		</Compiler>
+		<Linker>
+			<Add option="`sdl-config --libs`" />
+			<Add library="SDLmain" />
+			<Add library="SDL" />
+			<Add library="SDL_image" />
+			<Add library="SDL_gfx" />
+			<Add library="dl" />
+			<Add library="pthread" />
+			<Add directory="/usr/lib64" />
+			<Add directory="/usr/lib" />
+			<Add directory="/Users/guest/apps/usr/lib64" />
+			<Add directory="/Users/guest/apps/usr/lib" />
+		</Linker>
+		<Unit filename="src/gauss_pyramid.cpp" />
+		<Unit filename="src/gauss_pyramid.h" />
+		<Unit filename="src/hood.cpp" />
+		<Unit filename="src/hood.h" />
+		<Unit filename="src/main.cpp" />
+		<Unit filename="src/sdl.cpp" />
+		<Unit filename="src/sdl.h" />
+		<Unit filename="src/tex_syn.cpp" />
+		<Unit filename="src/tex_syn.h" />
+		<Unit filename="src/util.cpp" />
+		<Unit filename="src/util.h" />
+		<Extensions>
+			<code_completion />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

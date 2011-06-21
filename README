@@ -1,0 +1,102 @@
+Joseph Balough
+CMPSC 458
+Project 4: Texture Synthesis
+12/13/2009
+
+
+I developed this project on Kubuntu 9.04 Jaunty Jackalope using the Code::Blocks IDE in C++.
+I used the SDL, SDL_image, and SDL_gfx libraries for all the graphics functions needed
+to complete the assignment. SDL provides a simple cross-platform graphics library that can do
+a lot of fancy things. I only really used it for its window creation and image datatype though
+it can do a whole lot more than that. SDL_image is a small extension to SDL that is capable of
+opening tga, bmp, pnm, xpm, xcf, pcx, gif, jpg, lbm, and png images for use as an SDL_Surface.
+Because of SDL_image, my program can accept any of the above formats for an input texture.
+SDL_gfx extends SDL with zoom, rotate, and primitive functions and was only used for its 
+scale function.
+
+I basically ended up implementing the Li-Yi Wei and Marc Levoy pixel-by-pixel algorithm. 
+The program can be switched between their single-resolution and multi-resolution algorithms 
+with the TEX_SYN_USE_MULTIRESOLUTION preprocessor define. If TEX_SYN_USE_MULTIRESOLUTION
+is defined, the multi-resolution algorithm will be used. The multi-resolution algorithm uses 
+a Gaussian pyramid for the multi-resolution pyramid and a sum of weighted squared differences
+to determine similarity between neighborhoods (textons). The squares are weighted by the variables
+TEX_SYN_RED_WEIGHT, TEX_SYN_GREEN_WEIGHT, and TEX_SYN_BLUE_WEIGHT to give a value to similarity
+in each of the red, green and blue channels of color. This weighting can be turned off by
+removing the TEX_SYN_WEIGHTED_COLORS preprocessor define.
+
+I sped up their process a little bit by saving data that takes a lot of time to calculate but 
+is used more than once instead of calculating it several times. For example, instead of 
+calculating the neighborhood of any given pixel of the gaussian pyramid of the input texture,
+I store all of the neighborhoods in a corresponding neighborhood pyramid. This works because
+the input texture never changes and thus, neither does its neighborhoods.
+I also sped up the algorithm by introducing a small amount of parallelism using SDL's built in
+threading tools. SDL provides a cross-platform method of creating, executing and synchronizing
+threads. The threads are used when comparing neighborhoods for each pixel. In my testing on my
+dual-core processor, 22 threads provided the best perfomance, speeding the time it takes to
+synthesize a row of the bottom layer by 0.1 second. Threading can be turned off by setting
+the number of threads to use to 0; setting it to 1 will have the program create 1 thread to
+do all comparison work.
+
+
+
+To use my TextureSynthesis program, use the following command:
+
+  ./TextureSynthesis (input texture filename) (texton neighborhood diameter)
+		      (output size) [number threads] [r weight] [g weight] [b weight]
+
+-Options in () are required, options in [] are optional. Note that if you want to set 
+    r weight, number threads must be set too, otherwise what you want to be r weight will 
+    be set to the number of threads to use.
+-Input texture can be a tga, bmp, pnm, xpm, xcf, pcx, gif, jpg, lbm, or png file.
+-If [number threads] is set to 0, no threads will be generated. If it is set to 1, 
+    one thread will be generated to do all the work. Default is 22.
+-[rgb weight] defines how much weight to give to the r, g, and b channels when calculating 
+    the similarity between two neighborhoods. These values are only used if 
+    rgb weighting is enabled in the code. Default values are 0.85, 1.0, and 0.6 respectively.
+
+
+The program will bring up a window between the size of 640 x 480 and 1270x900 depending on
+the size of the texture it is going to synthesize. As it generates each pixel of each level
+of the texture, it will update the window with a picture of the synthesizing layer. When the
+texture is fully synthesized, the final product remains on the screen until the user closes
+the window. The synthesis can be canceled at any time by closing the window or pressing
+the escape key.
+The fully synthesized texture will be saved in the bitmap format in the synthesizedTextures
+folder. It will be of the following format: [input filename]-[width]x[height],[textonDiameter].bmp
+Although the program currently only generates square textures, it can be very trivially changed
+to generate textures of any size.
+
+
+
+Zip File Structure:
+./bin				Contains pre-compiled binaries of my program
+	/linux			linux binaries compiled in Kubuntu 9.04
+		/debug			location where textures can be dumped for debugging
+		/sampleTextures		Filled with the sample textures provided
+		/synthesizedTextures	where the synthesized texture is saved
+	/Windows		Windows binaries compiled in Windows XP
+		/debug			location where textures can be dumped for debugging
+		/sampleTextures		Filled with the sample textures provided
+		/synthesizedTextures	where the synthesized texture is saved
+
+./CodeBlocksProject		Contains the Code::Blocks IDE project for this assignment.
+		/src			project source code
+		/bin			linux binary output
+
+./Samples			Contains some sample textures synthesized by my project
+
+./VisualStudioProject		Contains the Visual Studio project for this assignment
+				Note that this folder contains no source code. The project
+				references the source in the CodeBlocksProject/src folder
+				so these folders cannot be renamed.
+		/lib		All necessary library files for compilation
+
+
+
+Bonus Features:
+  *	Real-time preview of the ongoing texture synthesis
+  *	Multi-resolution synthesis implemented
+  *	Added multithreaded to improve performance
+  *	Colors are weighted when comparing neighborhoods
+  *	saves synthesis results to an output file
+  *	Windows and Linux builds!
