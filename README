@@ -1,5 +1,4 @@
 Joseph Balough
-CMPSC 458
 Project 4: Texture Synthesis
 12/13/2009
 
@@ -66,37 +65,10 @@ folder. It will be of the following format: [input filename]-[width]x[height],[t
 Although the program currently only generates square textures, it can be very trivially changed
 to generate textures of any size.
 
-
-
-Zip File Structure:
-./bin				Contains pre-compiled binaries of my program
-	/linux			linux binaries compiled in Kubuntu 9.04
-		/debug			location where textures can be dumped for debugging
-		/sampleTextures		Filled with the sample textures provided
-		/synthesizedTextures	where the synthesized texture is saved
-	/Windows		Windows binaries compiled in Windows XP
-		/debug			location where textures can be dumped for debugging
-		/sampleTextures		Filled with the sample textures provided
-		/synthesizedTextures	where the synthesized texture is saved
-
-./CodeBlocksProject		Contains the Code::Blocks IDE project for this assignment.
-		/src			project source code
-		/bin			linux binary output
-
-./Samples			Contains some sample textures synthesized by my project
-
-./VisualStudioProject		Contains the Visual Studio project for this assignment
-				Note that this folder contains no source code. The project
-				references the source in the CodeBlocksProject/src folder
-				so these folders cannot be renamed.
-		/lib		All necessary library files for compilation
-
-
-
-Bonus Features:
+Features:
   *	Real-time preview of the ongoing texture synthesis
   *	Multi-resolution synthesis implemented
   *	Added multithreaded to improve performance
   *	Colors are weighted when comparing neighborhoods
   *	saves synthesis results to an output file
-  *	Windows and Linux builds!
+  *	Windows and Linux
